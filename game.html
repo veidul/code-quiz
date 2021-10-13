@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./game.css">
+    <title>Code-Quiz</title>
+</head>
+
+<body>
+    <div class="container" id="game-container">
+        <div class="timer" id="timer"></div>
+        <div id="game" class="justify-center flex-column">
+            <div id="score-display">
+                <div id="score-display-item">
+                    <h1 class="score-prefix">Score:</h1>
+                    <p class="score-actual" id="score">0</p>
+                </div>
+            </div>
+            <h2 id="question">Question 1: Commonly used data types DO NOT include which of the following?</h2>
+            <div class="choice-container">
+                <p class="choice-prefix">A</p>
+                <p class="choice-text" data-number="1">Choice 1</p>
+            </div>
+            <div class="choice-container">
+                <p class="choice-prefix">B</p>
+                <p class="choice-text" data-number="2">Choice 2</p>
+            </div>
+            <div class="choice-container">
+                <p class="choice-prefix">C</p>
+                <p class="choice-text" data-number="3">Choice 3</p>
+            </div>
+            <div class="choice-container">
+                <p class="choice-prefix">D</p>
+                <p class="choice-text" data-number="4">Choice 4</p>
+            </div>
+        </div>
+    </div>
+    <div class="container hide" id="hs-container">
+        <div class="end" id="flex-center flex-column">
+            <h1 id="final-score"></h1>
+            <p>THIS IS TEST</p>
+            <form>
+                <input type="text" name="initials" id="initials" placeholder="initials"/>
+                <button type="submit" class="btn" id="saveScoreBtn" >Save</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="./script.js"></script>
