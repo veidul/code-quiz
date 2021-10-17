@@ -14,3 +14,8 @@ You will not know if your score is better than the highscores until you enter yo
 Thank you for playing! 
 
 -Ludie Lambright
+
+![code-quiz deployed](https://veidul.github.io/code-quiz/index.html)
+![Deployed screenshot highscore](assets\pictures\hscore-screen.jpg)
+![Deployed screenshot question](assets\pictures\question.jpg)
+![Deployed screenshot start-quiz](assets\pictures\start-quiz.jpg)
