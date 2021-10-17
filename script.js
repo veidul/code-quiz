@@ -6,15 +6,18 @@ const gameContainerEl = document.getElementById('game-container')
 const hsContainerEl = document.getElementById('hs-container')
 const finalScoreEl = document.getElementById('final-score')
 const initialsEl = document.querySelector('#initials')
+const mostRecentScore = localStorage.getItem("mostRecentScore");
 const correct_answer = 20;
 const max_questions = 5;
-const saveScoreBtnEL = document.getElementById('saveScoreBtn')
+const saveScoreBtnEL = document.getElementById('saveScoreBtn');
+const highScoresList = document.getElementById('high-scores-list');
+const highscores = JSON.parse(localStorage.getItem('highscores')) || [];
 let currentQuestion = {};
 let acceptingAnswers = true;
 let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
-let highscores = [];
+//list of questions
 let questions = [
     {
         question: "Commonly used data types DO NOT include",
@@ -55,9 +58,8 @@ let questions = [
     }
 ]
 
-//constants
 
-
+//sets my variables for game start and starts timer provides question
 startGame = () => {
     questionCounter = 0;
     score = 0;
@@ -65,11 +67,10 @@ startGame = () => {
     timerStart();
     getNewQuestion();
 };
-
+//provides from list of questions without repeating
 getNewQuestion = () => {
 
     if (availableQuestions.length === 0 || questionCounter >= max_questions) {
-        // return window.location.assign("./highscores.html");
         clearScreen();
         finalScoreEl.innerHTML = score;
         showHSScreen();
@@ -87,7 +88,7 @@ getNewQuestion = () => {
 
     acceptingAnswers = true;
 };
-
+//if answer is right or wrong 
 choices.forEach(choice => {
     choice.addEventListener("click", e => {
         if (!acceptingAnswers) return;
@@ -109,13 +110,14 @@ choices.forEach(choice => {
         }, 500);
     });
 });
+//makes my score text go up when you answer question correctly
 incrementScore = num => {
     score += num;
     scoreText.innerText = score;
 }
 var timeLeft = 75;
 var timer;
-
+//sets my timer
 function timerStart() {
     timer = setInterval(function () {
         timeLeft--;
@@ -125,41 +127,38 @@ function timerStart() {
                 clearScreen();
                 finalScoreEl.innerHTML = score;
                 showHSScreen();
-                // return window.location.assign("./highscores.html");
             }, 500);
             clearInterval(timer);
         }
-    }, 100);
+    }, 1000);
 }
+//hides questions screen
 function clearScreen() {
     gameContainerEl.classList.add("hide");
 }
+//shows hs screen
 function showHSScreen() {
     hsContainerEl.classList.remove("hide");
 }
+//saves highscore and cuts out lower scores puts in order greatest to least and adds them to list
 function saveHS(event) {
-    event.stopPropagation();
     event.preventDefault();
-    let temp = initialsEl;
-    console.log(temp)
-    // ask teacher in office hours initials not saving or logging into console.
-    let playerHS = [{
-        initials: initialsEl.innerText, 
-        finalScore: finalScoreEl.innerText
-    }]
-    console.log(playerHS)
-    localStorage.setItem("highscores", JSON.stringify(playerHS))
+
+    const score = {
+        name: initialsEl.value,
+        score: finalScoreEl.innerText
+    }
+
+    highscores.push(score);
+    highscores.sort((a, b) => b.score - a.score);
+    highscores.splice(5);
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+    highScoresList.innerHTML = highscores.map(scores => {
+        return `<li class="high-score">${scores.name}-${scores.score}</li>`;
+    })
+        .join("");
 }
-
-//add another function function getFromLocal() {
-//   highscores = JSON.parse(localStorage.getItem("highscores"));
-//   return highscores; }
-//
-
-//push highscore value to highscore array.
-// keep only top 5 high scores
-// restyle highscore page
-// restyle buttons
-// restyle timer
+//starts game
 startGame();
-saveScoreBtnEL.addEventListener("click", saveHS);
+// El on click will run save high score
+saveScoreBtnEL.addEventListener("click", saveHS)
